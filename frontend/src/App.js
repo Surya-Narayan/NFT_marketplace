@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import ToggleView from './components/ToggleView';
 import MembershipForm from './components/MembershipForm';
 import MembershipsList from './components/MembershipsList';
+import './App.css';
 
 const App = () => {
   const [isCreatorView, setIsCreatorView] = useState(true);
@@ -12,10 +13,12 @@ const App = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-8">NFT Memberships Marketplace</h1>
+    <div className="container">
+      <header>
+        <h1>NFT Memberships Marketplace</h1>
+      </header>
       <ToggleView onToggle={handleToggleView} />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid">
         <div>
           <MembershipForm isCreatorView={isCreatorView} />
         </div>
@@ -23,6 +26,9 @@ const App = () => {
           <MembershipsList />
         </div>
       </div>
+      <footer>
+        <p>&copy; 2024 NFT Memberships Marketplace. All rights reserved.</p>
+      </footer>
     </div>
   );
 };
