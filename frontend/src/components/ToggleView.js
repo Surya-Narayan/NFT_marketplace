@@ -1,5 +1,6 @@
 // src/components/ToggleView.js
 import React, { useState } from 'react';
+import { Toggle, Stack } from '@fluentui/react';
 
 const ToggleView = ({ onToggle }) => {
   const [isCreatorView, setCreatorView] = useState(true);
@@ -11,14 +12,23 @@ const ToggleView = ({ onToggle }) => {
 
   return (
     <div className="mb-8 text-center">
-      <label className="flex items-center space-x-2 cursor-pointer">
-        <span className={`text-lg font-semibold ${isCreatorView ? 'text-blue-500' : 'text-gray-500'}`}>Creator</span>
-        <div className="relative">
-          <input type="checkbox" className="hidden" onChange={handleToggle} />
-          <div className={`toggle ${isCreatorView ? 'toggle--active' : ''}`} />
-        </div>
-        <span className={`text-lg font-semibold ${isCreatorView ? 'text-gray-500' : 'text-blue-500'}`}>Buyer</span>
-      </label>
+      <Stack horizontal tokens={{ childrenGap: 10 }} align="center">
+        <span className="text-lg font-semibold">Creator</span>
+        <Toggle
+          checked={isCreatorView}
+          onChange={handleToggle}
+          styles={{
+            root: {
+              borderRadius: '16px',
+              backgroundColor: isCreatorView ? '#0078D4' : '#EDEBE9',
+            },
+            thumb: {
+              backgroundColor: isCreatorView ? 'white' : '#0078D4',
+            },
+          }}
+        />
+        <span className="text-lg font-semibold">Buyer</span>
+      </Stack>
     </div>
   );
 };

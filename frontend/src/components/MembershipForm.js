@@ -1,5 +1,7 @@
 // src/components/MembershipForm.js
 import React, { useState } from 'react';
+import { TextField, DefaultButton } from '@fluentui/react';
+
 
 const MembershipForm = ({ isCreatorView }) => {
   const [formData, setFormData] = useState({
@@ -28,72 +30,48 @@ const MembershipForm = ({ isCreatorView }) => {
     <div className="mb-8 p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-semibold mb-4">Membership Form</h2>
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="title" className="block text-sm font-medium text-gray-600 mb-2">Title</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleInputChange}
-            className="form-input w-full"
-            placeholder="Enter title"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="symbol" className="block text-sm font-medium text-gray-600 mb-2">Symbol</label>
-          <input
-            type="text"
-            id="symbol"
-            name="symbol"
-            value={formData.symbol}
-            onChange={handleInputChange}
-            className="form-input w-full"
-            placeholder="Enter symbol"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="image" className="block text-sm font-medium text-gray-600 mb-2">Image URL</label>
-          <input
-            type="text"
-            id="image"
-            name="image"
-            value={formData.image}
-            onChange={handleInputChange}
-            className="form-input w-full"
-            placeholder="Enter image URL"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="price" className="block text-sm font-medium text-gray-600 mb-2">Price (USD)</label>
-          <input
-            type="number"
-            id="price"
-            name="price"
-            value={formData.price}
-            onChange={handleInputChange}
-            className="form-input w-full"
-            placeholder="Enter price"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="benefits" className="block text-sm font-medium text-gray-600 mb-2">Benefits (comma-separated)</label>
-          <input
-            type="text"
-            id="benefits"
-            name="benefits"
-            value={formData.benefits}
-            onChange={handleInputChange}
-            className="form-input w-full"
-            placeholder="Enter benefits"
-            required
-          />
-        </div>
-        <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-full">Create Membership</button>
+        <TextField
+          label="Title"
+          name="title"
+          value={formData.title}
+          onChange={handleInputChange}
+          required
+        />
+        <TextField
+          label="Symbol"
+          name="symbol"
+          value={formData.symbol}
+          onChange={handleInputChange}
+          required
+        />
+        <TextField
+          label="Image URL"
+          name="image"
+          value={formData.image}
+          onChange={handleInputChange}
+          required
+        />
+        <TextField
+          label="Price (USD)"
+          name="price"
+          type="number"
+          value={formData.price}
+          onChange={handleInputChange}
+          required
+        />
+        <TextField
+          label="Benefits (comma-separated)"
+          name="benefits"
+          value={formData.benefits}
+          onChange={handleInputChange}
+          required
+        />
+        <DefaultButton
+          type="submit"
+          styles={{ root: { background: '#0078D4', color: 'white', marginTop: '10px' } }}
+        >
+          Create Membership
+        </DefaultButton>
       </form>
     </div>
   );

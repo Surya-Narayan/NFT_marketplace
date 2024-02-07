@@ -1,5 +1,8 @@
 // src/components/MembershipsList.js
 import React, { useState, useEffect } from 'react';
+import { List, Image, Label, Separator } from '@fluentui/react';
+import { TextField, DefaultButton } from '@fluentui/react';
+
 
 const MembershipsList = () => {
   const [memberships, setMemberships] = useState([]);
@@ -24,21 +27,28 @@ const MembershipsList = () => {
   return (
     <div>
       <h2 className="text-2xl font-semibold mb-4">Memberships List</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {memberships.map((membership, index) => (
+      <List
+        items={memberships}
+        onRenderCell={(membership, index) => (
           <div key={index} className="bg-white rounded-lg shadow-md p-6">
-            <img src={membership.image} alt={membership.title} className="mb-4 w-full h-40 object-cover rounded" />
+            <Image
+              src={membership.image}
+              alt={membership.title}
+              className="mb-4 w-full h-40 object-cover rounded"
+            />
             <h3 className="text-lg font-semibold mb-2">{membership.title}</h3>
-            <p className="text-gray-600 mb-2">Symbol: {membership.symbol}</p>
-            <p className="text-gray-600 mb-2">Price: ${membership.price}</p>
+            <Label>{`Symbol: ${membership.symbol}`}</Label>
+            <Separator />
+            <Label>{`Price: $${membership.price}`}</Label>
+            <Separator />
             <ul className="list-disc pl-4">
               {membership.benefits.map((benefit, idx) => (
                 <li key={idx} className="text-gray-600">{benefit}</li>
               ))}
             </ul>
           </div>
-        ))}
-      </div>
+        )}
+      />
     </div>
   );
 };
