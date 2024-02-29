@@ -1,51 +1,52 @@
-// src/components/MembershipsList.js
 import React, { useState, useEffect } from 'react';
 import { List, Image, Label, Separator } from '@fluentui/react';
-import { TextField, DefaultButton } from '@fluentui/react';
-
+import axios from 'axios';
 
 const MembershipsList = () => {
   const [memberships, setMemberships] = useState([]);
 
-  // Fetch memberships data (dummy data for now)
   useEffect(() => {
-    // Implement API call or fetch logic here
-    // For now, using dummy data
-    const dummyData = [
-      {
-        title: 'Exclusive Access Pass',
-        symbol: 'EAP123',
-        image: 'https://example.com/eap123-image.jpg',
-        price: 25,
-        benefits: ['Early Content Access', 'VIP Events Entry', 'Private Community Forum'],
-      },
-      // Add more dummy data as needed
-    ];
-    setMemberships(dummyData);
+    // Make a GET request to fetch memberships data
+    axios.get('http://localhost:3000/memberships')
+      .then(response => {
+        // Assuming the response.data is an array of memberships
+        setMemberships(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching memberships:', error);
+      });
   }, []);
 
   return (
-    <div>
-      <h2 className="text-2xl font-semibold mb-4">Memberships List</h2>
+    <div className="max-w-4xl mx-auto mt-8">
+      <h2 className="text-4xl font-bold mb-8 text-center">Memberships List</h2>
       <List
         items={memberships}
         onRenderCell={(membership, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-md p-6">
-            <Image
-              src={membership.image}
-              alt={membership.title}
-              className="mb-4 w-full h-40 object-cover rounded"
-            />
-            <h3 className="text-lg font-semibold mb-2">{membership.title}</h3>
-            <Label>{`Symbol: ${membership.symbol}`}</Label>
-            <Separator />
-            <Label>{`Price: $${membership.price}`}</Label>
-            <Separator />
-            <ul className="list-disc pl-4">
-              {membership.benefits.map((benefit, idx) => (
-                <li key={idx} className="text-gray-600">{benefit}</li>
-              ))}
-            </ul>
+          <div key={index} className="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div className="w-40 h-40 overflow-hidden rounded-full mb-4 mx-auto">
+              <Image
+                src={membership.image}
+                alt={membership.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <h3 className="text-2xl font-semibold mb-2 text-center">{membership.title}</h3>
+            <Label className="text-gray-600 block mb-2">{`Symbol: ${membership.symbol}`}</Label>
+            <Separator styles={{ root: { margin: '4' } }} />
+            <Label className="text-gray-600 block mb-2">{`Price: $${membership.price}`}</Label>
+            <Separator styles={{ root: { margin: '4' } }} />
+            <p className="text-gray-700 mb-4 text-center">{membership.description}</p>
+            <h4 className="text-xl font-semibold mb-2 text-center">Benefits:</h4>
+            {Array.isArray(membership.benefits) ? (
+              <ul className="list-disc pl-6 mb-4">
+                {membership.benefits.map((benefit, idx) => (
+                  <li key={idx} className="text-gray-600">{benefit}</li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-600 text-center">No benefits available</p>
+            )}
           </div>
         )}
       />

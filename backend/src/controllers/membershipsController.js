@@ -1,8 +1,8 @@
 // controllers/membershipsController.js
-
+require('dotenv').config();
 const { MongoClient } = require('mongodb');
 
-const uri = 'mongodb+srv://nftuser:nftuser@cluster0.yb01tnq.mongodb.net/?retryWrites=true&w=majority'; // Replace with your actual MongoDB connection URI
+const uri = process.env.mongodb_cloud; // Replace with your actual MongoDB connection URI
 
 const client = new MongoClient(uri, { useNewUrlParser: false, useUnifiedTopology: false });
 let membershipsCollection;
@@ -18,6 +18,7 @@ const getAllMemberships = async (req, res) => {
   try {
     const memberships = await membershipsCollection.find().toArray();
     res.json(memberships);
+    console.log(memberships);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }

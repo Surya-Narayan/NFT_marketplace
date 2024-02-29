@@ -1,7 +1,9 @@
 // src/components/MembershipForm.js
 import React, { useState } from 'react';
 import { TextField, DefaultButton } from '@fluentui/react';
-
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MembershipForm = ({ isCreatorView }) => {
   const [formData, setFormData] = useState({
@@ -20,10 +22,29 @@ const MembershipForm = ({ isCreatorView }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Implement your form submission logic here
-    console.log('Form Submitted:', formData);
+
+    try {
+      // Make a POST request to your server
+      const response = await axios.post('http://localhost:3000/memberships', formData);
+      setFormData({
+        title: '',
+        symbol: '',
+        image: '',
+        price: '',
+        benefits: '',
+      });
+      // Handle the response as needed
+      console.log('Server Response:', response.data);
+      toast.success('Membership added successfully!', { position: toast.POSITION.TOP_RIGHT });
+
+    } catch (error) {
+      // Handle errors
+      console.error('Error submitting form:', error);
+      toast.error('Error adding membership. Please try again.', { position: toast.POSITION.TOP_RIGHT });
+
+    }
   };
 
   return (

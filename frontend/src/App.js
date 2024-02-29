@@ -1,35 +1,28 @@
 // src/App.js
-import React, { useState } from 'react';
-import ToggleView from './components/ToggleView';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import MembershipForm from './components/MembershipForm';
 import MembershipsList from './components/MembershipsList';
 import './App.css';
 
 const App = () => {
-  const [isCreatorView, setIsCreatorView] = useState(true);
-
-  const handleToggleView = (isCreator) => {
-    setIsCreatorView(isCreator);
-  };
-
   return (
-    <div className="container">
-      <header>
-        <h1>NFT Memberships Marketplace</h1>
-      </header>
-      <ToggleView onToggle={handleToggleView} />
-      <div className="grid">
-        <div>
-          <MembershipForm isCreatorView={isCreatorView} />
+    <Router>
+      <div className="container">
+        <header>
+          <h1>NFT Memberships Marketplace</h1>
+        </header>
+        <div className="grid">
+          <Routes>
+            <Route path="/buyer" element={<MembershipsList />} />
+            <Route path="/creator" element={<MembershipForm />} />
+          </Routes>
         </div>
-        <div>
-          <MembershipsList />
-        </div>
+        <footer>
+          <p>&copy; 2024 NFT Memberships Marketplace. All rights reserved.</p>
+        </footer>
       </div>
-      <footer>
-        <p>&copy; 2024 NFT Memberships Marketplace. All rights reserved.</p>
-      </footer>
-    </div>
+    </Router>
   );
 };
 
